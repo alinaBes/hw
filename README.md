@@ -65,6 +65,34 @@ ssh- это протокол взаимодействия компьютера �
     #add my files to jbrowser 
     sudo jbrowse add-assembly Homo_sapiens.GRCh38.dna.primary_assembly.fa --load copy --out /var/www/html/jbrowse/
     sudo jbrowse add-track output.gff.gz --load copy --out /var/www/html/jbrowse
+    
+ #add bed files to genome browser 
+ 
+    wget -O atacseq.bed.gz https://www.encodeproject.org/files/ENCFF876UEM/@@download/ENCFF876UEM.bed.gz 
+    gunzip atacseq.bed.gz
+    wget -O mafc.bed.gz https://www.encodeproject.org/files/ENCFF994KMW/@@download/ENCFF994KMW.bed.gz 
+    gunzip mafc.bed.gz
+    bedtools sort -i atacseq.bed > atacseq_sorted.bed 
+    bedtools sort -i mafc.bed > mafc_sorted.bed
+    #rename chromosomes in bed file to compare with annotation
+    sed 's/^chr//' atacseq_sorted.bed >atacseq_new_sorted.bed
+    sed 's/^chr//' mafc_sorted.bed >mafc_new_sorted.bed 
+    bgzip atacseq_new_sorted.bed
+    bgzip mafc_new_sorted.bed
+    #index files
+    tabix atacseq_new_sorted.bed.gz
+    tabix  mafc_new_sorted.bed.gz 
+    #copy files to browser config
+    sudo jbrowse add-track atacseq_new_sorted.bed.gz --load copy --out /var/www/html/jbrowse
+    sudo jbrowse add-track mafc_new_sorted.bed.gz --load copy --out /var/www/html/jbrowse
+    
+ #make index for gene-name searching
+    
+    cd /var/www/html/jbrowse
+    sudo jbrowse text-index 
 
 #link for jbrowser session 
 <http://84.252.142.25/jbrowse/?session=share-9hx-KvV2me&password=hJoGk>
+
+
+
