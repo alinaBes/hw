@@ -71,4 +71,4 @@ ssh- это протокол взаимодействия компьютера �
     sudo jbrowse add-track output.gff.gz --load copy --out /var/www/html/jbrowse
 
 #link for jbrowser session 
-<http://84.252.142.25/jbrowse/?session=local--1DAC_cgw>
+<http://84.252.142.25/jbrowse/?session=share-9hx-KvV2me&password=hJoGk>
