@@ -55,10 +55,6 @@ ssh- это протокол взаимодействия компьютера �
     server {
           listen 80;
           index index.html;
-
-          location /jbrowse/ {
-              alias /home/alinabespalova/jbrowse2/;    
-          }
       }
 
     sudo nginx -s reload
